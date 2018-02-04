@@ -9,6 +9,7 @@
 -spec connect(string(), list(), string(), fun()) -> ok | {error, reason}.
 connect({post, Url}, Auth, Params, Callback) ->
     Headers = twerl_util:headers_for_auth(Auth, {post, Url}, Params),
+    io:format("JUST BEFORE ~p~n",[{Url, Headers, ?CONTENT_TYPE, Params}]),
     case catch httpc:request(post, {Url, Headers, ?CONTENT_TYPE, Params}, [], [{sync, false}, {stream, self}]) of
         {ok, RequestId} ->
             ?MODULE:handle_connection(Callback, RequestId);
