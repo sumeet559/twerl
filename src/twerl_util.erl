@@ -72,3 +72,11 @@ decode(Data) ->
             {Decoded} = jiffy:decode(Data),
             Decoded
     end.
+
+oauth_params(ConsumerKey, ConsumerSecret, TokenKey, TokenSecret, {Method, URL}, Params) ->
+    MethodStr = case Method of
+                    get -> "GET";
+                    post -> "POST" end,
+    Consumer = {ConsumerKey, ConsumerSecret, hmac_sha1},
+    SignedParams = oauth:sign(MethodStr, URL, Params, Consumer, TokenKey, TokenSecret),
+    oauth:uri_params_encode(SignedParams).
