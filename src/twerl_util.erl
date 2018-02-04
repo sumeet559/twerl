@@ -13,7 +13,7 @@
 % TODO extend for oauth
 -spec headers_for_auth(term(), term(), list()) -> list().
 headers_for_auth({basic, [User, Pass]}, _Endpoint, _Params) ->
-    generate_auth_headers(User, Pass).
+    generate_auth_headers(User, Pass);
 
 headers_for_auth({oauth, ConsumerKey, ConsumerSecret, TokenKey, TokenSecret,[]}, _Endpoint, _Params) ->
     {[], oauth_params(ConsumerKey, ConsumerSecret, TokenKey, TokenSecret, _Endpoint, _Params)}.
